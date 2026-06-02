@@ -1,0 +1,6 @@
+Place your real CV PDF in `/public/documents` with this exact filename to match
+the current buttons:
+
+/public/documents/resume.pdf
+
+Vite serves it from `/documents/resume.pdf`.

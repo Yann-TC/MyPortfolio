@@ -1,0 +1,18 @@
+:root {
+  --color-bg: #f7f5f0;
+  --color-surface: #fffdf8;
+  --color-text: #171717;
+  --color-muted: #6f6a61;
+  --color-accent: #86a82a;
+  --color-accent-dark: #647d20;
+  --color-border: #d8d3c8;
+  --color-border-strong: #b8b0a2;
+
+  --font-main: 'Inter', 'Satoshi', 'Space Grotesk', system-ui, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-script: 'Great Vibes', 'Cormorant Garamond', cursive;
+
+  --max-width: 1180px;
+  --radius: 8px;
+  --shadow-soft: 0 24px 70px rgba(23, 23, 23, 0.08);
+}
