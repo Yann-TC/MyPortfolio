@@ -10,7 +10,7 @@ export const skills: SkillGroup[] = [
   },
   {
     category: 'Backend',
-    items: ['Node.js', 'Express', 'REST APIs', 'DDD basics'],
+    items: ['Node.js', 'Express', 'Python', 'REST APIs', 'DDD basics'],
   },
   {
     category: 'Systems',

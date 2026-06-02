@@ -15,17 +15,18 @@ export function Hero() {
       <div className="hero__type">
         <p className="hero__kicker">Yann TOISON CHABANE</p>
         <h1 id="hero-title">SOFTWARE</h1>
-        <p className="hero__script">Developer Student</p>
+        <p className="hero__script">Engineer Student</p>
       </div>
 
       <div className="hero__content">
-        <p className="hero__subtitle">Software Engineering Student @ EPITECH</p>
+        <p className="hero__subtitle">Learning at EPITECH</p>
         <p className="hero__stack">
-          React - TypeScript - C++ - C - Full Stack
+          React - TypeScript - C++ - C - Unity - Python
         </p>
         <p className="hero__copy">
-          Building clear, production-minded software with a focus on frontend
-          craft, systems fundamentals, and full-stack engineering.
+          Building clear, production-minded software with a focus on a clean frontend
+          craft.
+          I also love lower-level programming, game development, and exploring new technologies.
         </p>
       </div>
 
