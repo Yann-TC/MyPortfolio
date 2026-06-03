@@ -13,6 +13,6 @@
   --font-script: 'Great Vibes', 'Cormorant Garamond', cursive;
 
   --max-width: 1180px;
-  --radius: 8px;
+  --radius: 0;
   --shadow-soft: 0 24px 70px rgba(23, 23, 23, 0.08);
 }

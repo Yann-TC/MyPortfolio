@@ -4,6 +4,7 @@ import { Button } from '../ui/Button';
 
 type HeroProps = {
   profile: ProfileSettings;
+  onPreviewCv: () => void;
 };
 
 function formatInternshipWindow(profile: ProfileSettings) {
@@ -21,7 +22,7 @@ function formatInternshipWindow(profile: ProfileSettings) {
   })} ${end.getFullYear()}`;
 }
 
-export function Hero({ profile }: HeroProps) {
+export function Hero({ profile, onPreviewCv }: HeroProps) {
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
       <div className="hero__meta" aria-label="Internship target">
@@ -49,10 +50,14 @@ export function Hero({ profile }: HeroProps) {
       </div>
 
       <div className="hero__actions" aria-label="Portfolio actions">
-        <Button variant="secondary" href={profile.resumeUrl} target="_blank" rel="noreferrer">
+        <button
+          className="button button--secondary"
+          type="button"
+          onClick={onPreviewCv}
+        >
           Preview CV
           <Eye size={17} aria-hidden="true" />
-        </Button>
+        </button>
         <Button href={profile.resumeUrl} download>
           Download CV
           <Download size={17} aria-hidden="true" />

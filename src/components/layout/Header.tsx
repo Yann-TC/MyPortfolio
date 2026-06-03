@@ -17,9 +17,10 @@ function scrollToSection(id: string) {
 
 type HeaderProps = {
   profile: ProfileSettings;
+  onPreviewCv: () => void;
 };
 
-export function Header({ profile }: HeaderProps) {
+export function Header({ profile, onPreviewCv }: HeaderProps) {
   return (
     <header className="site-header">
       <button
@@ -38,16 +39,15 @@ export function Header({ profile }: HeaderProps) {
         ))}
       </nav>
       <div className="site-header__actions">
-        <Button
-          variant="ghost"
-          href={profile.resumeUrl}
-          target="_blank"
-          rel="noreferrer"
+        <button
+          className="button button--ghost"
+          type="button"
+          onClick={onPreviewCv}
           aria-label="Preview CV"
         >
           <Eye size={16} aria-hidden="true" />
           <span>CV</span>
-        </Button>
+        </button>
         <Button variant="ghost" href={profile.resumeUrl} download aria-label="Download CV">
           <Download size={16} aria-hidden="true" />
           <span>CV</span>

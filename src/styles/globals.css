@@ -57,9 +57,9 @@ a {
   background: transparent;
   width: fit-content;
   color: var(--color-text);
-  font-family: var(--font-serif);
+  font-family: var(--font-main);
   font-size: 1.18rem;
-  font-weight: 600;
+  font-weight: 800;
   line-height: 1;
   cursor: pointer;
   transition:
@@ -125,8 +125,10 @@ a {
   padding: 0 16px;
   border: 1px solid var(--color-text);
   border-radius: var(--radius);
+  font: inherit;
   font-size: 0.86rem;
   font-weight: 700;
+  cursor: pointer;
   transition:
     transform 180ms ease,
     background 180ms ease,
@@ -136,8 +138,16 @@ a {
 
 .button:hover,
 .button:focus-visible {
+  outline: 0;
   box-shadow: 0 12px 30px rgba(23, 23, 23, 0.1);
   transform: translateY(-2px);
+}
+
+.button:focus-visible {
+  border-color: var(--color-accent-dark);
+  box-shadow:
+    0 0 0 2px var(--color-bg),
+    0 0 0 4px rgba(134, 168, 42, 0.42);
 }
 
 .button--primary {
@@ -167,6 +177,63 @@ a {
   font-size: 0.84rem;
   font-weight: 700;
   line-height: 1.45;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: clamp(14px, 3vw, 34px);
+  background: rgba(23, 23, 23, 0.62);
+}
+
+.cv-modal {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: min(100%, 980px);
+  height: min(88svh, 920px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  box-shadow: 0 28px 90px rgba(23, 23, 23, 0.28);
+  overflow: hidden;
+}
+
+.cv-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--color-border);
+  background: rgba(247, 245, 240, 0.94);
+}
+
+.cv-modal__header h2 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.cv-modal__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cv-modal__close {
+  width: 42px;
+  padding: 0;
+}
+
+.cv-modal__frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #fff;
 }
 
 .hero {
@@ -623,10 +690,11 @@ a {
 .badge {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 30px;
   padding: 0 10px;
   border: 1px solid var(--color-border);
-  border-radius: 999px;
+  border-radius: 0;
   background: rgba(247, 245, 240, 0.82);
   color: var(--color-muted);
   font-size: 0.78rem;
@@ -693,8 +761,8 @@ a {
   width: 11px;
   height: 11px;
   border: 2px solid var(--color-accent);
-  border-radius: 50%;
   background: var(--color-bg);
+  transform: rotate(45deg);
   content: '';
 }
 
@@ -897,6 +965,19 @@ a {
 
   .hero__actions .button {
     width: 100%;
+  }
+
+  .cv-modal {
+    height: min(84svh, 760px);
+  }
+
+  .cv-modal__header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .cv-modal__actions .button:first-child {
+    flex: 1;
   }
 
   .about-grid,

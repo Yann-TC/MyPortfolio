@@ -7,6 +7,7 @@ import { Projects } from '../components/sections/Projects';
 import { Skills } from '../components/sections/Skills';
 import { Footer } from '../components/layout/Footer';
 import { Header } from '../components/layout/Header';
+import { CvPreviewModal } from '../components/ui/CvPreviewModal';
 import { fallbackPortfolioData, type PortfolioData } from '../data/portfolio';
 import { loadPortfolioData } from '../lib/portfolioData';
 
@@ -14,6 +15,7 @@ export function App() {
   const [portfolioData, setPortfolioData] =
     useState<PortfolioData>(fallbackPortfolioData);
   const [isDataStale, setIsDataStale] = useState(false);
+  const [isCvPreviewOpen, setIsCvPreviewOpen] = useState(false);
 
   useLayoutEffect(() => {
     if ('scrollRestoration' in window.history) {
@@ -41,14 +43,20 @@ export function App() {
 
   return (
     <>
-      <Header profile={portfolioData.profile} />
+      <Header
+        profile={portfolioData.profile}
+        onPreviewCv={() => setIsCvPreviewOpen(true)}
+      />
       {isDataStale ? (
         <p className="data-warning" role="status">
           Live data could not be loaded. Some information may be outdated.
         </p>
       ) : null}
       <main>
-        <Hero profile={portfolioData.profile} />
+        <Hero
+          profile={portfolioData.profile}
+          onPreviewCv={() => setIsCvPreviewOpen(true)}
+        />
         <About profile={portfolioData.profile} />
         <Projects projects={portfolioData.projects} />
         <Experience experience={portfolioData.experience} />
@@ -56,6 +64,11 @@ export function App() {
         <Contact profile={portfolioData.profile} />
       </main>
       <Footer />
+      <CvPreviewModal
+        resumeUrl={portfolioData.profile.resumeUrl}
+        isOpen={isCvPreviewOpen}
+        onClose={() => setIsCvPreviewOpen(false)}
+      />
     </>
   );
 }
