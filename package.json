@@ -4,11 +4,8 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "api": "node server/index.js",
     "dev": "vite",
-    "dev:api": "PORT=3001 SQLITE_DB_PATH=./data/portfolio.sqlite node server/index.js",
     "build": "tsc -b && vite build",
-    "start": "PORT=3001 SQLITE_DB_PATH=./data/portfolio.sqlite node server/index.js",
     "preview": "vite preview"
   },
   "dependencies": {
