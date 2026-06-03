@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { About } from '../components/sections/About';
 import { Contact } from '../components/sections/Contact';
 import { Experience } from '../components/sections/Experience';
@@ -7,8 +7,14 @@ import { Projects } from '../components/sections/Projects';
 import { Skills } from '../components/sections/Skills';
 import { Footer } from '../components/layout/Footer';
 import { Header } from '../components/layout/Header';
+import { fallbackPortfolioData, type PortfolioData } from '../data/portfolio';
+import { loadPortfolioData } from '../lib/portfolioData';
 
 export function App() {
+  const [portfolioData, setPortfolioData] =
+    useState<PortfolioData>(fallbackPortfolioData);
+  const [isDataStale, setIsDataStale] = useState(false);
+
   useLayoutEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
@@ -18,16 +24,36 @@ export function App() {
     requestAnimationFrame(() => window.scrollTo(0, 0));
   }, []);
 
+  useEffect(() => {
+    let isMounted = true;
+
+    loadPortfolioData().then(({ data, isStale }) => {
+      if (isMounted) {
+        setPortfolioData(data);
+        setIsDataStale(isStale);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
     <>
-      <Header />
+      <Header profile={portfolioData.profile} />
+      {isDataStale ? (
+        <p className="data-warning" role="status">
+          Live data could not be loaded. Some information may be outdated.
+        </p>
+      ) : null}
       <main>
-        <Hero />
-        <About />
-        <Projects />
-        <Experience />
-        <Skills />
-        <Contact />
+        <Hero profile={portfolioData.profile} />
+        <About profile={portfolioData.profile} />
+        <Projects projects={portfolioData.projects} />
+        <Experience experience={portfolioData.experience} />
+        <Skills skills={portfolioData.skills} />
+        <Contact profile={portfolioData.profile} />
       </main>
       <Footer />
     </>

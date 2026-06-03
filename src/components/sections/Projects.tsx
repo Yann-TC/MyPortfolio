@@ -1,10 +1,14 @@
 import { ExternalLink, Github, Linkedin } from 'lucide-react';
-import { projects } from '../../data/projects';
+import type { Project } from '../../data/projects';
 import { Section } from '../layout/Section';
 import { Badge } from '../ui/Badge';
 import { Card } from '../ui/Card';
 
-export function Projects() {
+type ProjectsProps = {
+  projects: Project[];
+};
+
+export function Projects({ projects }: ProjectsProps) {
   return (
     <Section
       id="projects"

@@ -1,8 +1,12 @@
-import { skills } from '../../data/skills';
+import type { SkillGroup } from '../../data/skills';
 import { Section } from '../layout/Section';
 import { Badge } from '../ui/Badge';
 
-export function Skills() {
+type SkillsProps = {
+  skills: SkillGroup[];
+};
+
+export function Skills({ skills }: SkillsProps) {
   return (
     <Section
       id="skills"

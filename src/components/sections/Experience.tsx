@@ -1,8 +1,12 @@
-import { experience } from '../../data/experience';
+import type { ExperienceItem } from '../../data/experience';
 import { Section } from '../layout/Section';
 import { Card } from '../ui/Card';
 
-export function Experience() {
+type ExperienceProps = {
+  experience: ExperienceItem[];
+};
+
+export function Experience({ experience }: ExperienceProps) {
   return (
     <Section
       id="experience"

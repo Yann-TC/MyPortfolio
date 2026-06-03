@@ -1,8 +1,7 @@
 import { Download, Eye, Github, Linkedin } from 'lucide-react';
 import { routes } from '../../app/routes';
+import type { ProfileSettings } from '../../data/profile';
 import { Button } from '../ui/Button';
-
-const resumeUrl = '/documents/resume.pdf';
 
 const navItems = [
   ['About', routes.about],
@@ -16,7 +15,11 @@ function scrollToSection(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 }
 
-export function Header() {
+type HeaderProps = {
+  profile: ProfileSettings;
+};
+
+export function Header({ profile }: HeaderProps) {
   return (
     <header className="site-header">
       <button
@@ -25,7 +28,7 @@ export function Header() {
         onClick={() => scrollToSection('top')}
         aria-label="Back to top"
       >
-        Yann Toison Chabane
+        {profile.fullName}
       </button>
       <nav className="site-header__nav" aria-label="Primary navigation">
         {navItems.map(([label, id]) => (
@@ -37,7 +40,7 @@ export function Header() {
       <div className="site-header__actions">
         <Button
           variant="ghost"
-          href={resumeUrl}
+          href={profile.resumeUrl}
           target="_blank"
           rel="noreferrer"
           aria-label="Preview CV"
@@ -45,16 +48,16 @@ export function Header() {
           <Eye size={16} aria-hidden="true" />
           <span>CV</span>
         </Button>
-        <Button variant="ghost" href={resumeUrl} download aria-label="Download CV">
+        <Button variant="ghost" href={profile.resumeUrl} download aria-label="Download CV">
           <Download size={16} aria-hidden="true" />
           <span>CV</span>
         </Button>
-        <Button variant="ghost" href="https://github.com/Yann-TC" aria-label="GitHub profile">
+        <Button variant="ghost" href={profile.githubUrl} aria-label="GitHub profile">
           <Github size={16} aria-hidden="true" />
         </Button>
         <Button
           variant="ghost"
-          href="https://www.linkedin.com/in/yann-toison-chabane"
+          href={profile.linkedinUrl}
           aria-label="LinkedIn profile"
         >
           <Linkedin size={16} aria-hidden="true" />

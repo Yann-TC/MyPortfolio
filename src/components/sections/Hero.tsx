@@ -1,21 +1,39 @@
 import { Download, Eye, Github, Linkedin } from 'lucide-react';
+import type { ProfileSettings } from '../../data/profile';
 import { Button } from '../ui/Button';
 
-const resumeUrl = '/documents/resume.pdf';
+type HeroProps = {
+  profile: ProfileSettings;
+};
 
-export function Hero() {
+function formatInternshipWindow(profile: ProfileSettings) {
+  const start = new Date(`${profile.internshipStart}T00:00:00`);
+  const end = new Date(`${profile.internshipEnd}T00:00:00`);
+
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
+    return '1 April - 31 August 2027';
+  }
+
+  return `${start.getDate()} ${start.toLocaleString('en', {
+    month: 'long',
+  })} - ${end.getDate()} ${end.toLocaleString('en', {
+    month: 'long',
+  })} ${end.getFullYear()}`;
+}
+
+export function Hero({ profile }: HeroProps) {
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
       <div className="hero__meta" aria-label="Internship target">
-        <span>France - Switzerland - Germany - Remote Europe</span>
-        <span>1 April - 31 August 2027</span>
-        <span>Software Development Internship</span>
+        <span>{profile.searchZones.join(' - ')}</span>
+        <span>{formatInternshipWindow(profile)}</span>
+        <span>{profile.internshipLabel}</span>
       </div>
 
       <div className="hero__type">
-        <p className="hero__kicker">Yann TOISON CHABANE</p>
-        <h1 id="hero-title">SOFTWARE</h1>
-        <p className="hero__script">Engineer Student</p>
+        <p className="hero__kicker">{profile.fullName}</p>
+        <h1 id="hero-title">{profile.headline}</h1>
+        <p className="hero__script">{profile.subtitle}</p>
       </div>
 
       <div className="hero__content">
@@ -31,21 +49,21 @@ export function Hero() {
       </div>
 
       <div className="hero__actions" aria-label="Portfolio actions">
-        <Button variant="secondary" href={resumeUrl} target="_blank" rel="noreferrer">
+        <Button variant="secondary" href={profile.resumeUrl} target="_blank" rel="noreferrer">
           Preview CV
           <Eye size={17} aria-hidden="true" />
         </Button>
-        <Button href={resumeUrl} download>
+        <Button href={profile.resumeUrl} download>
           Download CV
           <Download size={17} aria-hidden="true" />
         </Button>
-        <Button variant="ghost" href="https://github.com/Yann-TC">
+        <Button variant="ghost" href={profile.githubUrl}>
           GitHub
           <Github size={17} aria-hidden="true" />
         </Button>
         <Button
           variant="ghost"
-          href="https://www.linkedin.com/in/yann-toison-chabane"
+          href={profile.linkedinUrl}
         >
           LinkedIn
           <Linkedin size={17} aria-hidden="true" />

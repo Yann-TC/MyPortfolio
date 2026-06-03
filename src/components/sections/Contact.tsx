@@ -1,13 +1,45 @@
 import { Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react';
+import type { ProfileSettings } from '../../data/profile';
 import { Section } from '../layout/Section';
 
-export function Contact() {
+type ContactProps = {
+  profile: ProfileSettings;
+};
+
+function formatDate(date: string) {
+  const parsedDate = new Date(`${date}T00:00:00`);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return date;
+  }
+
+  return `${parsedDate.getDate()} ${parsedDate.toLocaleString('en', {
+    month: 'long',
+  })}`;
+}
+
+function formatContactIntro(profile: ProfileSettings) {
+  const end = new Date(`${profile.internshipEnd}T00:00:00`);
+  const year = Number.isNaN(end.getTime()) ? '2027' : String(end.getFullYear());
+
+  return `${profile.internshipLabel} target: ${formatDate(
+    profile.internshipStart,
+  )} - ${formatDate(profile.internshipEnd)} ${year}, open to ${profile.searchZones.join(
+    ', ',
+  )}.`;
+}
+
+function readableProfileUrl(url: string) {
+  return url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+}
+
+export function Contact({ profile }: ContactProps) {
   return (
     <Section
       id="contact"
       label="Contact"
       title="Available for internship conversations."
-      intro="Software Development Internship target: 1 April - 31 August 2027, open to France, Switzerland, Germany, and remote opportunities across Europe."
+      intro={formatContactIntro(profile)}
     >
       <div className="contact-panel">
         <div>
@@ -23,17 +55,17 @@ export function Contact() {
         </div>
         <div>
           <p className="contact-panel__label">Profiles</p>
-          <a href="https://github.com/Yann-TC" target="_blank" rel="noreferrer">
+          <a href={profile.githubUrl} target="_blank" rel="noreferrer">
             <Github size={16} aria-hidden="true" />
-            github.com/Yann-TC
+            {readableProfileUrl(profile.githubUrl)}
           </a>
           <a
-            href="https://www.linkedin.com/in/yann-toison-chabane"
+            href={profile.linkedinUrl}
             target="_blank"
             rel="noreferrer"
           >
             <Linkedin size={16} aria-hidden="true" />
-            linkedin.com/in/yann-toison-chabane
+            {readableProfileUrl(profile.linkedinUrl)}
           </a>
         </div>
         <div>

@@ -157,6 +157,18 @@ a {
   color: var(--color-text);
 }
 
+.data-warning {
+  width: min(calc(100% - 32px), var(--max-width));
+  margin: 12px auto 0;
+  padding: 10px 14px;
+  border: 1px solid rgba(134, 168, 42, 0.42);
+  background: rgba(134, 168, 42, 0.12);
+  color: var(--color-accent-dark);
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
 .hero {
   position: relative;
   scroll-margin-top: 104px;
@@ -368,6 +380,7 @@ a {
 
 .about-grid p,
 .about-portrait,
+.about-event,
 .about-focus {
   min-height: 230px;
   margin: 0;
@@ -386,7 +399,8 @@ a {
   color: var(--color-bg);
 }
 
-.about-portrait img {
+.about-portrait img,
+.about-event img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -396,8 +410,37 @@ a {
   object-position: center;
 }
 
-.about-portrait figcaption {
+.about-event {
+  position: relative;
+  overflow: hidden;
+  min-height: 310px;
+  padding: 0;
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.about-event--wide {
+  grid-column: span 3;
+}
+
+.about-event--wide img {
+  object-position: 62% 36%;
+}
+
+.about-event::after {
   position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 44%;
+  background: linear-gradient(to top, rgba(23, 23, 23, 0.78), transparent);
+  content: '';
+}
+
+.about-portrait figcaption,
+.about-event figcaption {
+  position: absolute;
+  z-index: 1;
   right: 16px;
   bottom: 14px;
   left: 16px;
@@ -423,7 +466,7 @@ a {
 }
 
 .about-focus {
-  grid-column: span 3;
+  grid-column: span 4;
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: end;
@@ -533,6 +576,7 @@ a {
 .award-badge {
   display: inline-flex;
   align-items: center;
+  height: 22px;
   padding: 0 8px;
   border: 1px solid var(--color-accent-dark);
   border-radius: 0;
@@ -541,7 +585,7 @@ a {
   font-size: 0.64rem;
   font-weight: 900;
   letter-spacing: 0.05em;
-  line-height: 1.45;
+  line-height: 1;
   text-transform: uppercase;
 }
 
@@ -801,6 +845,10 @@ a {
   .about-focus {
     grid-column: span 2;
   }
+
+  .about-event--wide {
+    grid-column: span 2;
+  }
 }
 
 @media (max-width: 640px) {
@@ -860,6 +908,11 @@ a {
 
   .about-grid p {
     min-height: auto;
+  }
+
+  .about-event,
+  .about-event--wide {
+    grid-column: auto;
   }
 
   .about-focus {
