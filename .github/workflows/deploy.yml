@@ -9,11 +9,15 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Deploy
+      - name: Pull & build Vite app
         run: |
+          export NVM_DIR="$HOME/.nvm"
+          source "$NVM_DIR/nvm.sh"
+
           cd /home/deploy/portfolio
+
           git pull origin main
           npm install
           npm run build
+
           sudo systemctl reload nginx
-          echo "Deployment completed successfully!"
