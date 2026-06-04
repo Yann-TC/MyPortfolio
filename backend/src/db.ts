@@ -1,17 +1,38 @@
-import sqlite3 from 'sqlite3';
-import { open, type Database } from 'sqlite';
+import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import initSqlJs, { type SqlJsStatic } from 'sql.js';
 import { config } from './config.js';
 
-let db: Database<sqlite3.Database, sqlite3.Statement> | null = null;
+const require = createRequire(import.meta.url);
 
-export async function getDb() {
-  if (!db) {
-    db = await open({
-      filename: config.sqliteDbPath,
-      driver: sqlite3.Database,
+let sqlPromise: Promise<SqlJsStatic> | null = null;
+
+function getSql() {
+  if (!sqlPromise) {
+    sqlPromise = initSqlJs({
+      locateFile: () => require.resolve('sql.js/dist/sql-wasm.wasm'),
     });
-    await db.exec('PRAGMA foreign_keys = ON');
   }
 
-  return db;
+  return sqlPromise;
+}
+
+export async function queryRows<T extends Record<string, unknown>>(sql: string) {
+  const SQL = await getSql();
+  const file = readFileSync(config.sqliteDbPath);
+  const db = new SQL.Database(file);
+
+  try {
+    const [result] = db.exec(sql);
+
+    if (!result) {
+      return [] as T[];
+    }
+
+    return result.values.map((row) =>
+      Object.fromEntries(result.columns.map((column, index) => [column, row[index]])),
+    ) as T[];
+  } finally {
+    db.close();
+  }
 }

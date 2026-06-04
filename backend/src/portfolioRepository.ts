@@ -1,4 +1,4 @@
-import { getDb } from './db.js';
+import { queryRows } from './db.js';
 import type { PortfolioData, ProjectLink } from './types.js';
 
 type ProfileRow = {
@@ -28,7 +28,7 @@ type ProjectChildRow = {
 
 type ProjectLinkRow = ProjectChildRow & {
   href: string | null;
-  is_placeholder: 0 | 1;
+  is_placeholder: number;
 };
 
 type ExperienceRow = {
@@ -85,9 +85,7 @@ function uniqueLabels(labels: string[]) {
 }
 
 export async function getPortfolioData(): Promise<PortfolioData> {
-  const db = await getDb();
-
-  const profile = await db.get<ProfileRow>(
+  const [profile] = await queryRows<ProfileRow>(
       `SELECT full_name, headline, subtitle, search_zones, internship_start,
               internship_end, internship_label, resume_url, github_url, linkedin_url
          FROM profile_settings
@@ -99,44 +97,44 @@ export async function getPortfolioData(): Promise<PortfolioData> {
     throw new Error('No profile_settings row found.');
   }
 
-  const projects = await db.all<ProjectRow[]>(
+  const projects = await queryRows<ProjectRow>(
       `SELECT id, title, eyebrow, summary
          FROM projects
         WHERE is_featured = 1
         ORDER BY display_order ASC`,
     );
 
-  const awards = await db.all<ProjectChildRow[]>(
+  const awards = await queryRows<ProjectChildRow>(
     'SELECT project_id, label FROM project_awards ORDER BY display_order ASC',
   );
 
-  const stack = await db.all<ProjectChildRow[]>(
+  const stack = await queryRows<ProjectChildRow>(
     'SELECT project_id, label FROM project_stack ORDER BY display_order ASC',
   );
 
-  const links = await db.all<ProjectLinkRow[]>(
+  const links = await queryRows<ProjectLinkRow>(
       `SELECT project_id, label, href, is_placeholder
          FROM project_links
         ORDER BY display_order ASC`,
     );
 
-  const experiences = await db.all<ExperienceRow[]>(
+  const experiences = await queryRows<ExperienceRow>(
       `SELECT id, role, company, period, summary
          FROM experiences
         ORDER BY display_order ASC`,
     );
 
-  const highlights = await db.all<ExperienceHighlightRow[]>(
+  const highlights = await queryRows<ExperienceHighlightRow>(
       `SELECT experience_id, body
          FROM experience_highlights
         ORDER BY display_order ASC`,
     );
 
-  const categories = await db.all<ToolboxCategoryRow[]>(
+  const categories = await queryRows<ToolboxCategoryRow>(
     'SELECT id, name FROM toolbox_categories ORDER BY display_order ASC',
   );
 
-  const items = await db.all<ToolboxItemRow[]>(
+  const items = await queryRows<ToolboxItemRow>(
     'SELECT category_id, name FROM toolbox_items ORDER BY display_order ASC',
   );
 
