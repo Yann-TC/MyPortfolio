@@ -68,7 +68,7 @@ export function About({ profile }: AboutProps) {
             src="/documents/31-Baselhack_2025.JPEG"
             alt="Yann working with teammates at BaselHack 2025"
           />
-          <figcaption>BaselHack 2025 - dev session</figcaption>
+          <figcaption>BaselHack 2025</figcaption>
         </figure>
         <div className="about-focus" aria-label="Internship availability">
           <span>{getInternshipMonths(profile)}</span>
