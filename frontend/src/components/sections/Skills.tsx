@@ -15,8 +15,13 @@ export function Skills({ skills }: SkillsProps) {
       intro="Balanced between frontend production work, backend fundamentals, systems programming, and game-oriented tooling."
     >
       <div className="skills-grid">
-        {skills.map((group) => (
-          <div className="skill-group" key={group.category}>
+        {skills.map((group, index) => (
+          <div
+            className="skill-group"
+            key={group.category}
+            data-reveal
+            style={{ '--reveal-index': index % 3 }}
+          >
             <h3>{group.category}</h3>
             <div className="tag-list">
               {group.items.map((item) => (

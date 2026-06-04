@@ -41,7 +41,7 @@ export function Contact({ profile }: ContactProps) {
       title="Available for internship conversations."
       intro={formatContactIntro(profile)}
     >
-      <div className="contact-panel">
+      <div className="contact-panel" data-reveal>
         <div>
           <p className="contact-panel__label">Email</p>
           <a href="mailto:yann.toison-chabane@epitech.eu" target="_blank" rel="noreferrer">

@@ -38,7 +38,7 @@ export function About({ profile }: AboutProps) {
       title="Engineering student with production frontend experience."
       intro="Focused on building reliable, readable software across modern frontend, backend services, and lower-level systems."
     >
-      <div className="about-grid">
+      <div className="about-grid" data-reveal>
         <figure className="about-portrait">
           <img
             src="/documents/self_picture.jpeg"

@@ -17,8 +17,13 @@ export function Projects({ projects }: ProjectsProps) {
       intro="A compact selection spanning network programming, production frontend work, hackathon products, games, and graphics-oriented engineering."
     >
       <div className="project-grid">
-        {projects.map((project) => (
-          <Card key={project.title} className="project-card">
+        {projects.map((project, index) => (
+          <Card
+            key={project.title}
+            className="project-card"
+            data-reveal
+            style={{ '--reveal-index': index % 3 }}
+          >
             <div className="project-card__top">
               <p>{project.eyebrow}</p>
               {project.awards?.length ? (

@@ -9,6 +9,7 @@ import { Footer } from '../components/layout/Footer';
 import { Header } from '../components/layout/Header';
 import { CvPreviewModal } from '../components/ui/CvPreviewModal';
 import { fallbackPortfolioData, type PortfolioData } from '../data/portfolio';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import { loadPortfolioData } from '../lib/portfolioData';
 
 export function App() {
@@ -40,6 +41,8 @@ export function App() {
       isMounted = false;
     };
   }, []);
+
+  useScrollReveal([portfolioData]);
 
   return (
     <>
