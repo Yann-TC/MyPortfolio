@@ -11,7 +11,7 @@ export function Skills({ skills }: SkillsProps) {
     <Section
       id="skills"
       label="Toolbox"
-      title="A typed, practical engineering stack"
+      title="A practical engineering stack"
       intro="Balanced between frontend production work, backend fundamentals, systems programming, and game-oriented tooling."
     >
       <div className="skills-grid">
