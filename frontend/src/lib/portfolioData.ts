@@ -3,18 +3,34 @@ import { fallbackPortfolioData } from '../data/portfolio';
 
 const apiUrl = import.meta.env.VITE_API_URL as string | undefined;
 
+async function fetchResource<T>(path: string): Promise<T> {
+  const response = await fetch(`${apiUrl?.replace(/\/$/, '')}${path}`);
+
+  if (!response.ok) {
+    throw new Error(`Portfolio API ${path} responded with ${response.status}.`);
+  }
+
+  return (await response.json()) as T;
+}
+
 async function fetchPortfolioData(): Promise<PortfolioData> {
   if (!apiUrl) {
     return fallbackPortfolioData;
   }
 
-  const response = await fetch(`${apiUrl.replace(/\/$/, '')}/api/portfolio`);
+  const [profile, projects, experience, skills] = await Promise.all([
+    fetchResource<PortfolioData['profile']>('/profile'),
+    fetchResource<PortfolioData['projects']>('/projects'),
+    fetchResource<PortfolioData['experience']>('/experiences'),
+    fetchResource<PortfolioData['skills']>('/toolbox'),
+  ]);
 
-  if (!response.ok) {
-    throw new Error(`Portfolio API responded with ${response.status}.`);
-  }
-
-  return (await response.json()) as PortfolioData;
+  return {
+    profile,
+    projects,
+    experience,
+    skills,
+  };
 }
 
 export async function loadPortfolioData(): Promise<{

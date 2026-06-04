@@ -1,5 +1,12 @@
 import { queryRows } from './db.js';
-import type { PortfolioData, ProjectLink } from './types.js';
+import type {
+  ExperienceItem,
+  PortfolioData,
+  ProfileSettings,
+  Project,
+  ProjectLink,
+  SkillGroup,
+} from './types.js';
 
 type ProfileRow = {
   full_name: string;
@@ -85,6 +92,22 @@ function uniqueLabels(labels: string[]) {
 }
 
 export async function getPortfolioData(): Promise<PortfolioData> {
+  const [profile, projects, experience, skills] = await Promise.all([
+    getProfileSettings(),
+    getProjects(),
+    getExperiences(),
+    getToolbox(),
+  ]);
+
+  return {
+    profile,
+    projects,
+    experience,
+    skills,
+  };
+}
+
+export async function getProfileSettings(): Promise<ProfileSettings> {
   const [profile] = await queryRows<ProfileRow>(
       `SELECT full_name, headline, subtitle, search_zones, internship_start,
               internship_end, internship_label, resume_url, github_url, linkedin_url
@@ -97,6 +120,21 @@ export async function getPortfolioData(): Promise<PortfolioData> {
     throw new Error('No profile_settings row found.');
   }
 
+  return {
+    fullName: profile.full_name,
+    headline: profile.headline,
+    subtitle: profile.subtitle ?? '',
+    searchZones: parseSearchZones(profile.search_zones),
+    internshipStart: profile.internship_start ?? '',
+    internshipEnd: profile.internship_end ?? '',
+    internshipLabel: profile.internship_label ?? '',
+    resumeUrl: profile.resume_url ?? '',
+    githubUrl: profile.github_url ?? '',
+    linkedinUrl: profile.linkedin_url ?? '',
+  };
+}
+
+export async function getProjects(): Promise<Project[]> {
   const projects = await queryRows<ProjectRow>(
       `SELECT id, title, eyebrow, summary
          FROM projects
@@ -118,6 +156,29 @@ export async function getPortfolioData(): Promise<PortfolioData> {
         ORDER BY display_order ASC`,
     );
 
+  return projects.map((project) => ({
+    title: project.title,
+    eyebrow: project.eyebrow,
+    summary: project.summary,
+    awards: uniqueLabels(
+      awards
+        .filter((award) => award.project_id === project.id)
+        .map((award) => award.label),
+    ),
+    stack: stack
+      .filter((stackItem) => stackItem.project_id === project.id)
+      .map((stackItem) => stackItem.label),
+    links: links
+      .filter((link) => link.project_id === project.id)
+      .map((link) => ({
+        label: ensureProjectLinkLabel(link.label),
+        href: link.href ?? undefined,
+        isPlaceholder: Boolean(link.is_placeholder),
+      })),
+  }));
+}
+
+export async function getExperiences(): Promise<ExperienceItem[]> {
   const experiences = await queryRows<ExperienceRow>(
       `SELECT id, role, company, period, summary
          FROM experiences
@@ -130,6 +191,18 @@ export async function getPortfolioData(): Promise<PortfolioData> {
         ORDER BY display_order ASC`,
     );
 
+  return experiences.map((item) => ({
+    role: item.role,
+    company: item.company,
+    period: item.period,
+    summary: item.summary,
+    highlights: highlights
+      .filter((highlight) => highlight.experience_id === item.id)
+      .map((highlight) => highlight.body),
+  }));
+}
+
+export async function getToolbox(): Promise<SkillGroup[]> {
   const categories = await queryRows<ToolboxCategoryRow>(
     'SELECT id, name FROM toolbox_categories ORDER BY display_order ASC',
   );
@@ -138,53 +211,10 @@ export async function getPortfolioData(): Promise<PortfolioData> {
     'SELECT category_id, name FROM toolbox_items ORDER BY display_order ASC',
   );
 
-  return {
-    profile: {
-      fullName: profile.full_name,
-      headline: profile.headline,
-      subtitle: profile.subtitle ?? '',
-      searchZones: parseSearchZones(profile.search_zones),
-      internshipStart: profile.internship_start ?? '',
-      internshipEnd: profile.internship_end ?? '',
-      internshipLabel: profile.internship_label ?? '',
-      resumeUrl: profile.resume_url ?? '',
-      githubUrl: profile.github_url ?? '',
-      linkedinUrl: profile.linkedin_url ?? '',
-    },
-    projects: projects.map((project) => ({
-      title: project.title,
-      eyebrow: project.eyebrow,
-      summary: project.summary,
-      awards: uniqueLabels(
-        awards
-          .filter((award) => award.project_id === project.id)
-          .map((award) => award.label),
-      ),
-      stack: stack
-        .filter((stackItem) => stackItem.project_id === project.id)
-        .map((stackItem) => stackItem.label),
-      links: links
-        .filter((link) => link.project_id === project.id)
-        .map((link) => ({
-          label: ensureProjectLinkLabel(link.label),
-          href: link.href ?? undefined,
-          isPlaceholder: Boolean(link.is_placeholder),
-        })),
-    })),
-    experience: experiences.map((item) => ({
-      role: item.role,
-      company: item.company,
-      period: item.period,
-      summary: item.summary,
-      highlights: highlights
-        .filter((highlight) => highlight.experience_id === item.id)
-        .map((highlight) => highlight.body),
-    })),
-    skills: categories.map((category) => ({
+  return categories.map((category) => ({
       category: category.name,
       items: items
         .filter((item) => item.category_id === category.id)
         .map((item) => item.name),
-    })),
-  };
+    }));
 }
