@@ -84,71 +84,61 @@ function uniqueLabels(labels: string[]) {
   return [...new Set(labels)];
 }
 
-export function getPortfolioData(): PortfolioData {
-  const db = getDb();
+export async function getPortfolioData(): Promise<PortfolioData> {
+  const db = await getDb();
 
-  const profile = db
-    .prepare(
+  const profile = await db.get<ProfileRow>(
       `SELECT full_name, headline, subtitle, search_zones, internship_start,
               internship_end, internship_label, resume_url, github_url, linkedin_url
          FROM profile_settings
         ORDER BY created_at ASC
         LIMIT 1`,
-    )
-    .get() as ProfileRow | undefined;
+    );
 
   if (!profile) {
     throw new Error('No profile_settings row found.');
   }
 
-  const projects = db
-    .prepare(
+  const projects = await db.all<ProjectRow[]>(
       `SELECT id, title, eyebrow, summary
          FROM projects
         WHERE is_featured = 1
         ORDER BY display_order ASC`,
-    )
-    .all() as ProjectRow[];
+    );
 
-  const awards = db
-    .prepare('SELECT project_id, label FROM project_awards ORDER BY display_order ASC')
-    .all() as ProjectChildRow[];
+  const awards = await db.all<ProjectChildRow[]>(
+    'SELECT project_id, label FROM project_awards ORDER BY display_order ASC',
+  );
 
-  const stack = db
-    .prepare('SELECT project_id, label FROM project_stack ORDER BY display_order ASC')
-    .all() as ProjectChildRow[];
+  const stack = await db.all<ProjectChildRow[]>(
+    'SELECT project_id, label FROM project_stack ORDER BY display_order ASC',
+  );
 
-  const links = db
-    .prepare(
+  const links = await db.all<ProjectLinkRow[]>(
       `SELECT project_id, label, href, is_placeholder
          FROM project_links
         ORDER BY display_order ASC`,
-    )
-    .all() as ProjectLinkRow[];
+    );
 
-  const experiences = db
-    .prepare(
+  const experiences = await db.all<ExperienceRow[]>(
       `SELECT id, role, company, period, summary
          FROM experiences
         ORDER BY display_order ASC`,
-    )
-    .all() as ExperienceRow[];
+    );
 
-  const highlights = db
-    .prepare(
+  const highlights = await db.all<ExperienceHighlightRow[]>(
       `SELECT experience_id, body
          FROM experience_highlights
         ORDER BY display_order ASC`,
-    )
-    .all() as ExperienceHighlightRow[];
+    );
 
-  const categories = db
-    .prepare('SELECT id, name FROM toolbox_categories ORDER BY display_order ASC')
-    .all() as ToolboxCategoryRow[];
+  const categories = await db.all<ToolboxCategoryRow[]>(
+    'SELECT id, name FROM toolbox_categories ORDER BY display_order ASC',
+  );
 
-  const items = db
-    .prepare('SELECT category_id, name FROM toolbox_items ORDER BY display_order ASC')
-    .all() as ToolboxItemRow[];
+  const items = await db.all<ToolboxItemRow[]>(
+    'SELECT category_id, name FROM toolbox_items ORDER BY display_order ASC',
+  );
 
   return {
     profile: {

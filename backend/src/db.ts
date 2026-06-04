@@ -1,12 +1,16 @@
-import { DatabaseSync } from 'node:sqlite';
+import sqlite3 from 'sqlite3';
+import { open, type Database } from 'sqlite';
 import { config } from './config.js';
 
-let db: DatabaseSync | null = null;
+let db: Database<sqlite3.Database, sqlite3.Statement> | null = null;
 
-export function getDb() {
+export async function getDb() {
   if (!db) {
-    db = new DatabaseSync(config.sqliteDbPath);
-    db.exec('PRAGMA foreign_keys = ON');
+    db = await open({
+      filename: config.sqliteDbPath,
+      driver: sqlite3.Database,
+    });
+    await db.exec('PRAGMA foreign_keys = ON');
   }
 
   return db;

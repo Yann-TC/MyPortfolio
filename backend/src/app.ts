@@ -17,9 +17,9 @@ export function createApp() {
     res.json({ status: 'ok' });
   });
 
-  app.get('/api/portfolio', (_req, res, next) => {
+  app.get('/api/portfolio', async (_req, res, next) => {
     try {
-      res.json(getPortfolioData());
+      res.json(await getPortfolioData());
     } catch (error) {
       next(error);
     }
