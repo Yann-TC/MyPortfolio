@@ -1,6 +1,6 @@
-# Yann TOISON CHABANE Portfolio
+# MyPortfolio
 
-Personal portfolio for Yann TOISON CHABANE, built as a React frontend backed by a small Express API reading a private SQLite database.
+Personal portfolio, built as a React frontend backed by a small Express API reading a private SQLite database.
 
 ![Portfolio preview](frontend/public/documents/readme_img.png)
 
