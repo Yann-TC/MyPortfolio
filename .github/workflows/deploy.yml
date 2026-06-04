@@ -8,15 +8,19 @@ jobs:
   deploy:
     runs-on: self-hosted
 
+    environment:
+      name: production
+      url: https://yanntc.dev/
+
     steps:
       - name: Pull & build Vite app
         run: |
-            export NVM_DIR="$HOME/.nvm"
-            source "$NVM_DIR/nvm.sh"
+          export NVM_DIR="$HOME/.nvm"
+          source "$NVM_DIR/nvm.sh"
 
-            cd /home/deploy/portfolio
-            git pull origin main
+          cd /home/deploy/portfolio
+          git pull origin main
 
-            cd /home/deploy/portfolio/frontend
-            npm install
-            npm run build
+          cd /home/deploy/portfolio/frontend
+          npm install
+          npm run build
