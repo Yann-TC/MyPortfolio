@@ -24,7 +24,7 @@ export function Documents({ profile, onPreviewDocument }: DocumentsProps) {
     {
       title: 'Recommendation Letter',
       description: 'Reference letter from AkorD for my work on Kare.',
-      url: '/documents/lettre_recommandation_yann_tc_akord.pdf',
+      url: profile.recommendationLetterUrl,
     },
   ];
 
