@@ -19,6 +19,7 @@ type ProfileRow = {
   resume_url: string | null;
   github_url: string | null;
   linkedin_url: string | null;
+  recommendation_letter_url: string | null;
 };
 
 type ProjectRow = {
@@ -110,7 +111,7 @@ export async function getPortfolioData(): Promise<PortfolioData> {
 export async function getProfileSettings(): Promise<ProfileSettings> {
   const [profile] = await queryRows<ProfileRow>(
       `SELECT full_name, headline, subtitle, search_zones, internship_start,
-              internship_end, internship_label, resume_url, github_url, linkedin_url
+              internship_end, internship_label, resume_url, github_url, linkedin_url, recommendation_letter_url
          FROM profile_settings
         ORDER BY created_at ASC
         LIMIT 1`,
@@ -129,7 +130,7 @@ export async function getProfileSettings(): Promise<ProfileSettings> {
     internshipEnd: profile.internship_end ?? '',
     internshipLabel: profile.internship_label ?? '',
     resumeUrl: profile.resume_url ?? '',
-    recommendationLetterUrl: '/documents/lettre_recommandation_yann_tc_akord.pdf',
+    recommendationLetterUrl: profile.recommendation_letter_url ?? '',
     githubUrl: profile.github_url ?? '',
     linkedinUrl: profile.linkedin_url ?? '',
   };
