@@ -1,10 +1,10 @@
-import { Download, Eye, Github, Linkedin } from 'lucide-react';
+import { FileText, Github, Linkedin } from 'lucide-react';
+import { routes } from '../../app/routes';
 import type { ProfileSettings } from '../../data/profile';
 import { Button } from '../ui/Button';
 
 type HeroProps = {
   profile: ProfileSettings;
-  onPreviewCv: () => void;
 };
 
 function formatInternshipWindow(profile: ProfileSettings) {
@@ -22,7 +22,11 @@ function formatInternshipWindow(profile: ProfileSettings) {
   })} ${end.getFullYear()}`;
 }
 
-export function Hero({ profile, onPreviewCv }: HeroProps) {
+function scrollToSection(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+export function Hero({ profile }: HeroProps) {
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
       <div className="hero__meta" aria-label="Internship target">
@@ -51,17 +55,13 @@ export function Hero({ profile, onPreviewCv }: HeroProps) {
 
       <div className="hero__actions" aria-label="Portfolio actions">
         <button
-          className="button button--secondary"
+          className="button button--ghost"
           type="button"
-          onClick={onPreviewCv}
+          onClick={() => scrollToSection(routes.documents)}
         >
-          Preview CV
-          <Eye size={17} aria-hidden="true" />
+          Documents
+          <FileText size={17} aria-hidden="true" />
         </button>
-        <Button href={profile.resumeUrl} download>
-          Download CV
-          <Download size={17} aria-hidden="true" />
-        </Button>
         <Button variant="ghost" href={profile.githubUrl}>
           GitHub
           <Github size={17} aria-hidden="true" />

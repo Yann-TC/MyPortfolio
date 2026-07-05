@@ -559,6 +559,56 @@ a {
   font-size: 1.24rem;
 }
 
+.documents-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  border: 1px solid var(--color-border);
+  background: var(--color-border);
+}
+
+.document-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 18px;
+  min-height: 230px;
+  padding: 24px;
+  background: rgba(255, 253, 248, 0.74);
+}
+
+.document-card__icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--color-border);
+  background: rgba(134, 168, 42, 0.14);
+  color: var(--color-accent-dark);
+}
+
+.document-card__content h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.document-card__content p {
+  margin: 12px 0 0;
+  color: var(--color-muted);
+  line-height: 1.7;
+}
+
+.document-card__actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-self: end;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-border);
+}
+
 .about-focus {
   grid-column: span 4;
   display: grid;
@@ -928,6 +978,7 @@ a {
   }
 
   .about-grid,
+  .documents-grid,
   .project-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1008,10 +1059,15 @@ a {
   }
 
   .about-grid,
+  .documents-grid,
   .project-grid,
   .skills-grid,
   .contact-panel {
     grid-template-columns: 1fr;
+  }
+
+  .document-card__actions .button {
+    width: 100%;
   }
 
   .about-grid p {

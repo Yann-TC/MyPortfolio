@@ -3,12 +3,18 @@ import { useEffect } from 'react';
 import { Button } from './Button';
 
 type CvPreviewModalProps = {
-  resumeUrl: string;
+  documentUrl: string;
+  title?: string;
   isOpen: boolean;
   onClose: () => void;
 };
 
-export function CvPreviewModal({ resumeUrl, isOpen, onClose }: CvPreviewModalProps) {
+export function CvPreviewModal({
+  documentUrl,
+  title = 'CV Preview',
+  isOpen,
+  onClose,
+}: CvPreviewModalProps) {
   useEffect(() => {
     if (!isOpen) {
       return undefined;
@@ -50,9 +56,9 @@ export function CvPreviewModal({ resumeUrl, isOpen, onClose }: CvPreviewModalPro
         aria-labelledby="cv-modal-title"
       >
         <div className="cv-modal__header">
-          <h2 id="cv-modal-title">CV Preview</h2>
+          <h2 id="cv-modal-title">{title}</h2>
           <div className="cv-modal__actions">
-            <Button href={resumeUrl} download>
+            <Button href={documentUrl} download>
               Download
               <Download size={16} aria-hidden="true" />
             </Button>
@@ -60,7 +66,7 @@ export function CvPreviewModal({ resumeUrl, isOpen, onClose }: CvPreviewModalPro
               className="button button--ghost cv-modal__close"
               type="button"
               onClick={onClose}
-              aria-label="Close CV preview"
+              aria-label={`Close ${title.toLowerCase()}`}
             >
               <X size={18} aria-hidden="true" />
             </button>
@@ -68,8 +74,8 @@ export function CvPreviewModal({ resumeUrl, isOpen, onClose }: CvPreviewModalPro
         </div>
         <iframe
           className="cv-modal__frame"
-          src={`${resumeUrl}#toolbar=0&navpanes=0`}
-          title="CV PDF preview"
+          src={`${documentUrl}#toolbar=0&navpanes=0`}
+          title={`${title} PDF preview`}
         />
       </section>
     </div>

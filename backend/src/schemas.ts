@@ -9,6 +9,7 @@ export const profileSettingsSchema = z.object({
   internshipEnd: z.string(),
   internshipLabel: z.string(),
   resumeUrl: z.string(),
+  recommendationLetterUrl: z.string(),
   githubUrl: z.string(),
   linkedinUrl: z.string(),
 });

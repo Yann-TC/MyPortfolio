@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { About } from '../components/sections/About';
 import { Contact } from '../components/sections/Contact';
+import { Documents } from '../components/sections/Documents';
 import { Experience } from '../components/sections/Experience';
 import { Hero } from '../components/sections/Hero';
 import { Projects } from '../components/sections/Projects';
@@ -12,11 +13,17 @@ import { fallbackPortfolioData, type PortfolioData } from '../data/portfolio';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { loadPortfolioData } from '../lib/portfolioData';
 
+type PreviewDocument = {
+  title: string;
+  url: string;
+};
+
 export function App() {
   const [portfolioData, setPortfolioData] =
     useState<PortfolioData>(fallbackPortfolioData);
   const [isDataStale, setIsDataStale] = useState(false);
-  const [isCvPreviewOpen, setIsCvPreviewOpen] = useState(false);
+  const [previewDocument, setPreviewDocument] =
+    useState<PreviewDocument | null>(null);
 
   useLayoutEffect(() => {
     if ('scrollRestoration' in window.history) {
@@ -46,21 +53,19 @@ export function App() {
 
   return (
     <>
-      <Header
-        profile={portfolioData.profile}
-        onPreviewCv={() => setIsCvPreviewOpen(true)}
-      />
+      <Header profile={portfolioData.profile} />
       {isDataStale ? (
         <p className="data-warning" role="status">
           Live data could not be loaded. Some information may be outdated.
         </p>
       ) : null}
       <main>
-        <Hero
-          profile={portfolioData.profile}
-          onPreviewCv={() => setIsCvPreviewOpen(true)}
-        />
+        <Hero profile={portfolioData.profile} />
         <About profile={portfolioData.profile} />
+        <Documents
+          profile={portfolioData.profile}
+          onPreviewDocument={setPreviewDocument}
+        />
         <Projects projects={portfolioData.projects} />
         <Experience experience={portfolioData.experience} />
         <Skills skills={portfolioData.skills} />
@@ -68,9 +73,10 @@ export function App() {
       </main>
       <Footer />
       <CvPreviewModal
-        resumeUrl={portfolioData.profile.resumeUrl}
-        isOpen={isCvPreviewOpen}
-        onClose={() => setIsCvPreviewOpen(false)}
+        documentUrl={previewDocument?.url ?? ''}
+        title={previewDocument?.title}
+        isOpen={previewDocument !== null}
+        onClose={() => setPreviewDocument(null)}
       />
     </>
   );

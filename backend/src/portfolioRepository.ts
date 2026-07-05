@@ -129,6 +129,7 @@ export async function getProfileSettings(): Promise<ProfileSettings> {
     internshipEnd: profile.internship_end ?? '',
     internshipLabel: profile.internship_label ?? '',
     resumeUrl: profile.resume_url ?? '',
+    recommendationLetterUrl: '/documents/lettre_recommandation_yann_tc_akord.pdf',
     githubUrl: profile.github_url ?? '',
     linkedinUrl: profile.linkedin_url ?? '',
   };

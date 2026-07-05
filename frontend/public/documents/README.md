@@ -3,7 +3,7 @@ Place public downloadable documents here.
 Recommended files:
 
 - `resume.pdf`
-- `[Placeholder: transcript or recommendation letter].pdf`
+- `lettre_recommandation_yann_tc_akord.pdf`
 - `[Placeholder: portfolio case study].pdf`
 
 Files in this folder are served by Vite from `/documents/<filename>`.

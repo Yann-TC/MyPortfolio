@@ -1,4 +1,4 @@
-import { Download, Eye, Github, Linkedin } from 'lucide-react';
+import { FileText, Github, Linkedin } from 'lucide-react';
 import { routes } from '../../app/routes';
 import type { ProfileSettings } from '../../data/profile';
 import { Button } from '../ui/Button';
@@ -17,10 +17,9 @@ function scrollToSection(id: string) {
 
 type HeaderProps = {
   profile: ProfileSettings;
-  onPreviewCv: () => void;
 };
 
-export function Header({ profile, onPreviewCv }: HeaderProps) {
+export function Header({ profile }: HeaderProps) {
   return (
     <header className="site-header">
       <button
@@ -42,16 +41,12 @@ export function Header({ profile, onPreviewCv }: HeaderProps) {
         <button
           className="button button--ghost"
           type="button"
-          onClick={onPreviewCv}
-          aria-label="Preview CV"
+          onClick={() => scrollToSection(routes.documents)}
+          aria-label="Go to documents"
         >
-          <Eye size={16} aria-hidden="true" />
-          <span>CV</span>
+          <FileText size={16} aria-hidden="true" />
+          <span>Documents</span>
         </button>
-        <Button variant="ghost" href={profile.resumeUrl} download aria-label="Download CV">
-          <Download size={16} aria-hidden="true" />
-          <span>CV</span>
-        </Button>
         <Button variant="ghost" href={profile.githubUrl} aria-label="GitHub profile">
           <Github size={16} aria-hidden="true" />
         </Button>

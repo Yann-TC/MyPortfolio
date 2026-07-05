@@ -7,6 +7,7 @@ export type ProfileSettings = {
   internshipEnd: string;
   internshipLabel: string;
   resumeUrl: string;
+  recommendationLetterUrl: string;
   githubUrl: string;
   linkedinUrl: string;
 };
@@ -20,6 +21,7 @@ export const profile: ProfileSettings = {
   internshipEnd: '2027-08-31',
   internshipLabel: 'Software Development Internship',
   resumeUrl: '/documents/resume.pdf',
+  recommendationLetterUrl: '/documents/lettre_recommandation_yann_tc_akord.pdf',
   githubUrl: 'https://github.com/Yann-TC',
   linkedinUrl: 'https://www.linkedin.com/in/yann-toison-chabane',
 };
