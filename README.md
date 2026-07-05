@@ -8,7 +8,7 @@
 
 [![Website](https://img.shields.io/badge/yanntc.dev-visit-black?style=for-the-badge&logo=safari&logoColor=white)](https://yanntc.dev/)
 [![API](https://img.shields.io/badge/api.yanntc.dev-live-4CAF50?style=for-the-badge&logo=server&logoColor=white)](https://api.yanntc.dev)
-[![GitHub](https://img.shields.io/badge/GitHub-yanntc-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yanntc)
+[![GitHub](https://img.shields.io/badge/GitHub-yanntc-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yann-tc)
 
 <br/>
 
