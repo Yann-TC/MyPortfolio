@@ -47,7 +47,7 @@ export function About({ profile }: AboutProps) {
           <figcaption>Me</figcaption>
         </figure>
         <p>
-          Second-year student at EPITECH Mulhouse, building a profile between
+          Third-year student at EPITECH Mulhouse, building a profile between
           product interfaces and lower-level engineering fundamentals.
         </p>
         <p>
