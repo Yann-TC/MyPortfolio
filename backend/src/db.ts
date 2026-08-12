@@ -36,3 +36,9 @@ export async function queryRows<T extends Record<string, unknown>>(sql: string) 
     db.close();
   }
 }
+
+export async function getTableColumns(table: string) {
+  const rows = await queryRows<{ name: string }>(`PRAGMA table_info(${table})`);
+
+  return new Set(rows.map((row) => row.name));
+}

@@ -35,8 +35,8 @@ export function About({ profile }: AboutProps) {
     <Section
       id="about"
       label="Profile"
-      title="Engineering student with production frontend experience."
-      intro="Focused on building reliable, readable software across modern frontend, backend services, and lower-level systems."
+      title={profile.profileTitle}
+      intro={profile.profileIntro}
     >
       <div className="about-grid" data-reveal>
         <figure className="about-portrait">
@@ -46,23 +46,13 @@ export function About({ profile }: AboutProps) {
           />
           <figcaption>Me</figcaption>
         </figure>
-        <p>
-          Third-year student at EPITECH Mulhouse, building a profile between
-          product interfaces and lower-level engineering fundamentals.
-        </p>
-        <p>
-          At AkorD, I worked on Kare in a production TypeScript monorepo:
-          landing page, attachment flows, mobile interventions, and Cypress
-          regression work.
-        </p>
+        <p>{profile.profileLead}</p>
+        <p>{profile.profileExperience}</p>
         <p>
           For {getInternshipYear(profile)}, I am looking for a development
           internship in {profile.searchZones.join(', ')}.
         </p>
-        <p className="placeholder-note">
-          Outside client work, I like projects where code has to move: network
-          games, graphics experiments, hackathons, and teaching sessions.
-        </p>
+        <p className="placeholder-note">{profile.profileProjects}</p>
         <figure className="about-event about-event--wide">
           <img
             src="/documents/31-Baselhack_2025.JPEG"

@@ -1,4 +1,4 @@
-import { queryRows } from './db.js';
+import { getTableColumns, queryRows } from './db.js';
 import type {
   ExperienceItem,
   PortfolioData,
@@ -12,6 +12,11 @@ type ProfileRow = {
   full_name: string;
   headline: string;
   subtitle: string | null;
+  profile_title: string | null;
+  profile_intro: string | null;
+  profile_lead: string | null;
+  profile_experience: string | null;
+  profile_projects: string | null;
   search_zones: string | null;
   internship_start: string | null;
   internship_end: string | null;
@@ -92,6 +97,10 @@ function uniqueLabels(labels: string[]) {
   return [...new Set(labels)];
 }
 
+function selectColumn(columns: Set<string>, column: string) {
+  return columns.has(column) ? column : `NULL AS ${column}`;
+}
+
 export async function getPortfolioData(): Promise<PortfolioData> {
   const [profile, projects, experience, skills] = await Promise.all([
     getProfileSettings(),
@@ -109,9 +118,17 @@ export async function getPortfolioData(): Promise<PortfolioData> {
 }
 
 export async function getProfileSettings(): Promise<ProfileSettings> {
+  const columns = await getTableColumns('profile_settings');
   const [profile] = await queryRows<ProfileRow>(
-      `SELECT full_name, headline, subtitle, search_zones, internship_start,
-              internship_end, internship_label, resume_url, github_url, linkedin_url, recommendation_letter_url
+      `SELECT full_name, headline, subtitle,
+              ${selectColumn(columns, 'profile_title')},
+              ${selectColumn(columns, 'profile_intro')},
+              ${selectColumn(columns, 'profile_lead')},
+              ${selectColumn(columns, 'profile_experience')},
+              ${selectColumn(columns, 'profile_projects')},
+              search_zones, internship_start, internship_end, internship_label,
+              resume_url, github_url, linkedin_url,
+              ${selectColumn(columns, 'recommendation_letter_url')}
          FROM profile_settings
         ORDER BY created_at ASC
         LIMIT 1`,
@@ -125,6 +142,20 @@ export async function getProfileSettings(): Promise<ProfileSettings> {
     fullName: profile.full_name,
     headline: profile.headline,
     subtitle: profile.subtitle ?? '',
+    profileTitle:
+      profile.profile_title ?? 'Engineering student with production frontend experience.',
+    profileIntro:
+      profile.profile_intro ??
+      'Focused on building reliable, readable software across modern frontend, backend services, and lower-level systems.',
+    profileLead:
+      profile.profile_lead ??
+      'Third-year student at EPITECH Mulhouse, building a profile between product interfaces and lower-level engineering fundamentals.',
+    profileExperience:
+      profile.profile_experience ??
+      'At AkorD, I worked on Kare in a production TypeScript monorepo: landing page, attachment flows, mobile interventions, and Cypress regression work.',
+    profileProjects:
+      profile.profile_projects ??
+      'Outside client work, I like projects where code has to move: network games, graphics experiments, hackathons, and teaching sessions.',
     searchZones: parseSearchZones(profile.search_zones),
     internshipStart: profile.internship_start ?? '',
     internshipEnd: profile.internship_end ?? '',
