@@ -4,6 +4,5 @@ Recommended files:
 
 - `resume.pdf`
 - `lettre_recommandation_yann_tc_akord.pdf`
-- `[Placeholder: portfolio case study].pdf`
 
 Files in this folder are served by Vite from `/documents/<filename>`.

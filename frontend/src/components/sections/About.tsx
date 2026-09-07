@@ -1,34 +1,10 @@
 import type { ProfileSettings } from '../../data/profile';
+import { internshipMonthRange, internshipYear } from '../../lib/internship';
 import { Section } from '../layout/Section';
 
 type AboutProps = {
   profile: ProfileSettings;
 };
-
-function getInternshipYear(profile: ProfileSettings) {
-  const end = new Date(`${profile.internshipEnd}T00:00:00`);
-
-  if (Number.isNaN(end.getTime())) {
-    return '2027';
-  }
-
-  return String(end.getFullYear());
-}
-
-function getInternshipMonths(profile: ProfileSettings) {
-  const start = new Date(`${profile.internshipStart}T00:00:00`);
-  const end = new Date(`${profile.internshipEnd}T00:00:00`);
-
-  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
-    return 'April - August';
-  }
-
-  return `${start.toLocaleString('en', {
-    month: 'long',
-  })} - ${end.toLocaleString('en', {
-    month: 'long',
-  })}`;
-}
 
 export function About({ profile }: AboutProps) {
   return (
@@ -49,8 +25,8 @@ export function About({ profile }: AboutProps) {
         <p>{profile.profileLead}</p>
         <p>{profile.profileExperience}</p>
         <p>
-          For {getInternshipYear(profile)}, I am looking for a development
-          internship in {profile.searchZones.join(', ')}.
+          For {internshipYear(profile)}, I am looking for a development internship
+          in {profile.searchZones.join(', ')}.
         </p>
         <p className="placeholder-note">{profile.profileProjects}</p>
         <figure className="about-event about-event--wide">
@@ -61,8 +37,8 @@ export function About({ profile }: AboutProps) {
           <figcaption>BaselHack 2025</figcaption>
         </figure>
         <div className="about-focus" aria-label="Internship availability">
-          <span>{getInternshipMonths(profile)}</span>
-          <strong>{getInternshipYear(profile)}</strong>
+          <span>{internshipMonthRange(profile)}</span>
+          <strong>{internshipYear(profile)}</strong>
           <small>{profile.internshipLabel}</small>
         </div>
       </div>

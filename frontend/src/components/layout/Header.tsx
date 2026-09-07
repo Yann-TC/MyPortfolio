@@ -1,6 +1,7 @@
 import { FileText, Github, Linkedin } from 'lucide-react';
 import { routes } from '../../app/routes';
 import type { ProfileSettings } from '../../data/profile';
+import { scrollToSection } from '../../lib/scroll';
 import { Button } from '../ui/Button';
 
 const navItems = [
@@ -10,10 +11,6 @@ const navItems = [
   ['Skills', routes.skills],
   ['Contact', routes.contact],
 ] as const;
-
-function scrollToSection(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-}
 
 type HeaderProps = {
   profile: ProfileSettings;

@@ -69,8 +69,10 @@ This repository contains two packages:
 .
 ├── frontend/
 │   ├── src/
+│   │   ├── app/            ← app shell + minimal path router
+│   │   ├── pages/          ← HomePage, LegalNoticePage
 │   │   ├── components/
-│   │   ├── assets/
+│   │   ├── lib/
 │   │   └── main.tsx
 │   ├── index.html
 │   ├── vite.config.ts
@@ -79,7 +81,8 @@ This repository contains two packages:
 ├── backend/
 │   ├── src/
 │   │   ├── routes/
-│   │   └── index.ts
+│   │   ├── app.ts
+│   │   └── server.ts
 │   ├── data/
 │   │   └── portfolio.sqlite   ← production only, gitignored
 │   └── tsconfig.json
@@ -123,6 +126,7 @@ npm start        # runs compiled output
 1. **systemd** — starts the Express API on boot, restarts on failure.
 2. **Nginx** — proxies `api.yanntc.dev` to the local Express port; serves the static frontend build for `yanntc.dev`.
 3. **Certbot** — manages TLS for both domains.
+4. **Cloudflare** — sits in front as DNS + CDN proxy.
 
 ```bash
 # deploy frontend
@@ -132,6 +136,16 @@ cd frontend && npm run build
 # deploy backend
 cd backend && npm run build
 sudo systemctl restart portfolio-api
+```
+
+The frontend is a single-page app: the client resolves `/legal-notice`
+itself, so the Nginx `location` serving `yanntc.dev` must fall back to
+`index.html` for unknown paths.
+
+```nginx
+location / {
+    try_files $uri $uri/ /index.html;
+}
 ```
 
 ---

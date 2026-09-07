@@ -1,37 +1,20 @@
 import { FileText, Github, Linkedin } from 'lucide-react';
 import { routes } from '../../app/routes';
 import type { ProfileSettings } from '../../data/profile';
+import { internshipDateRange } from '../../lib/internship';
+import { scrollToSection } from '../../lib/scroll';
 import { Button } from '../ui/Button';
 
 type HeroProps = {
   profile: ProfileSettings;
 };
 
-function formatInternshipWindow(profile: ProfileSettings) {
-  const start = new Date(`${profile.internshipStart}T00:00:00`);
-  const end = new Date(`${profile.internshipEnd}T00:00:00`);
-
-  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
-    return '1 April - 31 August 2027';
-  }
-
-  return `${start.getDate()} ${start.toLocaleString('en', {
-    month: 'long',
-  })} - ${end.getDate()} ${end.toLocaleString('en', {
-    month: 'long',
-  })} ${end.getFullYear()}`;
-}
-
-function scrollToSection(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-}
-
 export function Hero({ profile }: HeroProps) {
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
       <div className="hero__meta" aria-label="Internship target">
         <span>{profile.searchZones.join(' - ')}</span>
-        <span>{formatInternshipWindow(profile)}</span>
+        <span>{internshipDateRange(profile)}</span>
         <span>{profile.internshipLabel}</span>
       </div>
 
@@ -66,10 +49,7 @@ export function Hero({ profile }: HeroProps) {
           GitHub
           <Github size={17} aria-hidden="true" />
         </Button>
-        <Button
-          variant="ghost"
-          href={profile.linkedinUrl}
-        >
+        <Button variant="ghost" href={profile.linkedinUrl}>
           LinkedIn
           <Linkedin size={17} aria-hidden="true" />
         </Button>

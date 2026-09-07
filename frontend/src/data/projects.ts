@@ -20,11 +20,7 @@ export const projects: Project[] = [
     summary:
       'EPITECH second year team project with three binaries: a C++ server managing a real-time game world and TCP protocol, a graphical client, and an autonomous AI player.',
     stack: ['C++', 'Networking', 'AI', 'Python', 'SFML'],
-    links: [
-      //{ label: 'GitHub', isPlaceholder: true },
-      { label: 'Private' },
-      //{ label: ' ', isPlaceholder: true },
-    ],
+    links: [{ label: 'Private' }],
   },
   {
     title: 'Animap',
@@ -43,7 +39,6 @@ export const projects: Project[] = [
     awards: ['Event winner'],
     stack: ['Unity', 'C#', 'Game Design'],
     links: [
-      //{ label: 'GitHub', isPlaceholder: true },
       { label: 'Demo', href: 'https://www.youtube.com/watch?v=iXvxTeBBGbk' },
     ],
   },
@@ -63,8 +58,7 @@ export const projects: Project[] = [
     stack: ['Flutter', 'Dart', 'Fastify', 'TypeScript', 'Python', 'AI Agent'],
     links: [
       { label: 'GitHub', href: 'https://github.com/mael-bertocchi/baselhack-2025' },
-      { label: 'Presentation', href: 'https://www.linkedin.com/posts/yann-toison-chabane_hackathon-baselhack2025-epitech-activity-7391748608741707776-0rn_?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFM8CXUBt5lKWZs7tUN1ZKfdEv8zY_zdBsU' }
-      //{ label: 'Demo', isPlaceholder: true },
+      { label: 'Presentation', href: 'https://www.linkedin.com/posts/yann-toison-chabane_hackathon-baselhack2025-epitech-activity-7391748608741707776-0rn_?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFM8CXUBt5lKWZs7tUN1ZKfdEv8zY_zdBsU' },
     ],
   },
   {

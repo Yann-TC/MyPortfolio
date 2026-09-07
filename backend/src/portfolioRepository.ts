@@ -120,19 +120,19 @@ export async function getPortfolioData(): Promise<PortfolioData> {
 export async function getProfileSettings(): Promise<ProfileSettings> {
   const columns = await getTableColumns('profile_settings');
   const [profile] = await queryRows<ProfileRow>(
-      `SELECT full_name, headline, subtitle,
-              ${selectColumn(columns, 'profile_title')},
-              ${selectColumn(columns, 'profile_intro')},
-              ${selectColumn(columns, 'profile_lead')},
-              ${selectColumn(columns, 'profile_experience')},
-              ${selectColumn(columns, 'profile_projects')},
-              search_zones, internship_start, internship_end, internship_label,
-              resume_url, github_url, linkedin_url,
-              ${selectColumn(columns, 'recommendation_letter_url')}
-         FROM profile_settings
-        ORDER BY created_at ASC
-        LIMIT 1`,
-    );
+    `SELECT full_name, headline, subtitle,
+            ${selectColumn(columns, 'profile_title')},
+            ${selectColumn(columns, 'profile_intro')},
+            ${selectColumn(columns, 'profile_lead')},
+            ${selectColumn(columns, 'profile_experience')},
+            ${selectColumn(columns, 'profile_projects')},
+            search_zones, internship_start, internship_end, internship_label,
+            resume_url, github_url, linkedin_url,
+            ${selectColumn(columns, 'recommendation_letter_url')}
+       FROM profile_settings
+      ORDER BY created_at ASC
+      LIMIT 1`,
+  );
 
   if (!profile) {
     throw new Error('No profile_settings row found.');
@@ -169,11 +169,11 @@ export async function getProfileSettings(): Promise<ProfileSettings> {
 
 export async function getProjects(): Promise<Project[]> {
   const projects = await queryRows<ProjectRow>(
-      `SELECT id, title, eyebrow, summary
-         FROM projects
-        WHERE is_featured = 1
-        ORDER BY display_order ASC`,
-    );
+    `SELECT id, title, eyebrow, summary
+       FROM projects
+      WHERE is_featured = 1
+      ORDER BY display_order ASC`,
+  );
 
   const awards = await queryRows<ProjectChildRow>(
     'SELECT project_id, label FROM project_awards ORDER BY display_order ASC',
@@ -184,10 +184,10 @@ export async function getProjects(): Promise<Project[]> {
   );
 
   const links = await queryRows<ProjectLinkRow>(
-      `SELECT project_id, label, href, is_placeholder
-         FROM project_links
-        ORDER BY display_order ASC`,
-    );
+    `SELECT project_id, label, href, is_placeholder
+       FROM project_links
+      ORDER BY display_order ASC`,
+  );
 
   return projects.map((project) => ({
     title: project.title,
@@ -213,16 +213,16 @@ export async function getProjects(): Promise<Project[]> {
 
 export async function getExperiences(): Promise<ExperienceItem[]> {
   const experiences = await queryRows<ExperienceRow>(
-      `SELECT id, role, company, period, summary
-         FROM experiences
-        ORDER BY display_order ASC`,
-    );
+    `SELECT id, role, company, period, summary
+       FROM experiences
+      ORDER BY display_order ASC`,
+  );
 
   const highlights = await queryRows<ExperienceHighlightRow>(
-      `SELECT experience_id, body
-         FROM experience_highlights
-        ORDER BY display_order ASC`,
-    );
+    `SELECT experience_id, body
+       FROM experience_highlights
+      ORDER BY display_order ASC`,
+  );
 
   return experiences.map((item) => ({
     role: item.role,
@@ -245,9 +245,9 @@ export async function getToolbox(): Promise<SkillGroup[]> {
   );
 
   return categories.map((category) => ({
-      category: category.name,
-      items: items
-        .filter((item) => item.category_id === category.id)
-        .map((item) => item.name),
-    }));
+    category: category.name,
+    items: items
+      .filter((item) => item.category_id === category.id)
+      .map((item) => item.name),
+  }));
 }

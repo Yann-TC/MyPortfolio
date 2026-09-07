@@ -1,32 +1,16 @@
 import { Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react';
 import type { ProfileSettings } from '../../data/profile';
+import { internshipDateRange } from '../../lib/internship';
 import { Section } from '../layout/Section';
 
 type ContactProps = {
   profile: ProfileSettings;
 };
 
-function formatDate(date: string) {
-  const parsedDate = new Date(`${date}T00:00:00`);
-
-  if (Number.isNaN(parsedDate.getTime())) {
-    return date;
-  }
-
-  return `${parsedDate.getDate()} ${parsedDate.toLocaleString('en', {
-    month: 'long',
-  })}`;
-}
-
 function formatContactIntro(profile: ProfileSettings) {
-  const end = new Date(`${profile.internshipEnd}T00:00:00`);
-  const year = Number.isNaN(end.getTime()) ? '2027' : String(end.getFullYear());
-
-  return `${profile.internshipLabel} target: ${formatDate(
-    profile.internshipStart,
-  )} - ${formatDate(profile.internshipEnd)} ${year}, open to ${profile.searchZones.join(
-    ', ',
-  )}.`;
+  return `${profile.internshipLabel} target: ${internshipDateRange(
+    profile,
+  )}, open to ${profile.searchZones.join(', ')}.`;
 }
 
 function readableProfileUrl(url: string) {
@@ -59,11 +43,7 @@ export function Contact({ profile }: ContactProps) {
             <Github size={16} aria-hidden="true" />
             {readableProfileUrl(profile.githubUrl)}
           </a>
-          <a
-            href={profile.linkedinUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href={profile.linkedinUrl} target="_blank" rel="noreferrer">
             <Linkedin size={16} aria-hidden="true" />
             {readableProfileUrl(profile.linkedinUrl)}
           </a>

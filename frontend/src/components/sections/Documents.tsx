@@ -3,7 +3,7 @@ import type { ProfileSettings } from '../../data/profile';
 import { Section } from '../layout/Section';
 import { Button } from '../ui/Button';
 
-type PortfolioDocument = {
+export type PortfolioDocument = {
   title: string;
   description: string;
   url: string;

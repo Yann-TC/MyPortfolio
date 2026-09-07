@@ -39,11 +39,13 @@ npm run preview
 ```
 
 ## Project Structure
-- src/app: app shell and routes
+- src/app: app shell and minimal path router
+- src/pages: HomePage and LegalNoticePage (`/legal-notice`)
 - src/components/layout: shared layout components
 - src/components/sections: page sections
 - src/components/ui: reusable UI primitives
 - src/data: content for experience, projects, skills
+- src/lib: data loading and small helpers
 - src/styles: global styles and design tokens
 - public: static assets
 
@@ -53,7 +55,11 @@ npm run preview
 - Update global styles in src/styles
 
 ## Deployment
-Any static hosting that serves the Vite build output will work (Netlify, Vercel, GitHub Pages, etc.).
+Built with `npm run build` and served as static files by Nginx (behind Cloudflare as
+DNS + CDN). The app is a single-page app with a client-resolved `/legal-notice`
+route, so the host must fall back to `index.html` for unknown paths
+(`try_files $uri $uri/ /index.html;` in Nginx, or an equivalent SPA rewrite on any
+other static host).
 
 ## License
 Not specified.
