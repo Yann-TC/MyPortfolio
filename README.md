@@ -150,6 +150,24 @@ location / {
 
 ---
 
+## Editing the database
+
+Edit content live with Prisma Studio on the VM (no restart needed, the API re-reads the file per request).
+
+```bash
+# on the VM (one-time: mkdir ~/db-studio && cd ~/db-studio && npm init -y && npm i -D prisma@6,
+# add a schema.prisma pointing at file:/home/deploy/portfolio/backend/data/portfolio.sqlite, then npx prisma db pull)
+cd ~/db-studio && npx prisma studio --port 5555 --browser none
+
+# on your machine, then open http://localhost:5555
+ssh -N -L 5555:127.0.0.1:5555 deploy@<vm>
+```
+
+> [!WARNING]
+> Studio has no auth: never expose port 5555 publicly. Back up `portfolio.sqlite` before editing.
+
+---
+
 <div align="center">
 
 · [yanntc.dev](https://yanntc.dev/) ·
