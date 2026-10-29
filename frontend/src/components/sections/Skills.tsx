@@ -11,8 +11,7 @@ export function Skills({ skills }: SkillsProps) {
     <Section
       id="skills"
       label="Toolbox"
-      title="A practical engineering stack"
-      intro="Balanced between frontend production work, backend fundamentals, systems programming, and game-oriented tooling."
+      title="Frontend, backend, systems and games"
     >
       <div className="skills-grid">
         {skills.map((group, index) => (

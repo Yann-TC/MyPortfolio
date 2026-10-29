@@ -12,7 +12,6 @@ export function About({ profile }: AboutProps) {
       id="about"
       label="Profile"
       title={profile.profileTitle}
-      intro={profile.profileIntro}
     >
       <div className="about-grid" data-reveal>
         <figure className="about-portrait">

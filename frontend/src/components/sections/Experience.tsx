@@ -11,8 +11,7 @@ export function Experience({ experience }: ExperienceProps) {
     <Section
       id="experience"
       label="Experience"
-      title="Production context and teaching support"
-      intro="Hands-on frontend delivery on a production SaaS product, paired with mentoring, code review, and evaluation responsibilities at EPITECH."
+      title="Shipping a SaaS product, mentoring at EPITECH"
     >
       <div className="timeline">
         {experience.map((item, index) => (

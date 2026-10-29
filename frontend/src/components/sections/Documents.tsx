@@ -17,7 +17,7 @@ type DocumentsProps = {
 export function Documents({ profile, onPreviewDocument }: DocumentsProps) {
   const documents: PortfolioDocument[] = [
     {
-      title: 'CV',
+      title: 'Resume',
       description: 'Current resume with education, experience, projects, and skills.',
       url: profile.resumeUrl,
     },
@@ -32,8 +32,7 @@ export function Documents({ profile, onPreviewDocument }: DocumentsProps) {
     <Section
       id="documents"
       label="Documents"
-      title="Preview or download all my documents."
-      intro="My resume and recommendation letter are here."
+      title="Resume and recommendation letter"
     >
       <div className="documents-grid" data-reveal>
         {documents.map((document) => (

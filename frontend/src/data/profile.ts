@@ -21,7 +21,7 @@ export const profile: ProfileSettings = {
   fullName: 'Yann TOISON CHABANE',
   headline: 'SOFTWARE',
   subtitle: 'Engineer Student',
-  profileTitle: 'Engineering student with production frontend experience.',
+  profileTitle: 'Engineering student with production frontend experience',
   profileIntro:
     'Focused on building reliable, readable software across modern frontend, backend services, and lower-level systems.',
   profileLead:

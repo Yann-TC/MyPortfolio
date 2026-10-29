@@ -1,8 +1,8 @@
-import { ExternalLink, Github, Linkedin } from 'lucide-react';
-import type { Project } from '../../data/projects';
-import { Section } from '../layout/Section';
-import { Badge } from '../ui/Badge';
-import { Card } from '../ui/Card';
+import { ExternalLink, Github, Linkedin } from "lucide-react";
+import type { Project } from "../../data/projects";
+import { Section } from "../layout/Section";
+import { Badge } from "../ui/Badge";
+import { Card } from "../ui/Card";
 
 type ProjectsProps = {
   projects: Project[];
@@ -13,8 +13,7 @@ export function Projects({ projects }: ProjectsProps) {
     <Section
       id="projects"
       label="Selected work"
-      title="Featured projects"
-      intro="A compact selection spanning network programming, production frontend work, hackathon products, games, and graphics-oriented engineering."
+      title="From full stack web apps to game engines"
     >
       <div className="project-grid">
         {projects.map((project, index) => (
@@ -22,12 +21,15 @@ export function Projects({ projects }: ProjectsProps) {
             key={project.title}
             className="project-card"
             data-reveal
-            style={{ '--reveal-index': index % 3 }}
+            style={{ "--reveal-index": index % 3 }}
           >
             <div className="project-card__top">
               <p>{project.eyebrow}</p>
               {project.awards?.length ? (
-                <div className="award-list" aria-label={`${project.title} awards`}>
+                <div
+                  className="award-list"
+                  aria-label={`${project.title} awards`}
+                >
                   {project.awards.map((award) => (
                     <span className="award-badge" key={award}>
                       {award}
@@ -46,23 +48,23 @@ export function Projects({ projects }: ProjectsProps) {
               ))}
             </div>
             <div className="project-card__links">
-              {project.links.map((link) => (
-                link.label === 'Private' || link.isPlaceholder || !link.href ? (
+              {project.links.map((link) =>
+                link.label === "Private" || link.isPlaceholder || !link.href ? (
                   <span
                     key={link.label}
                     className="project-card__link project-card__link--muted"
                     aria-label={`${project.title} ${link.label} unavailable`}
                   >
-                    {link.label === 'Presentation' ? (
+                    {link.label === "Presentation" ? (
                       <Linkedin size={16} aria-hidden="true" />
-                    ) : link.label === 'Demo' ? (
+                    ) : link.label === "Demo" ? (
                       <ExternalLink size={16} aria-hidden="true" />
                     ) : (
                       <Github size={16} aria-hidden="true" />
                     )}
                     <span>
                       {link.label}
-                      {link.isPlaceholder ? ' [Placeholder]' : ''}
+                      {link.isPlaceholder ? " [Placeholder]" : ""}
                     </span>
                   </span>
                 ) : (
@@ -72,22 +74,22 @@ export function Projects({ projects }: ProjectsProps) {
                     href={link.href}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label={`${project.title} ${link.label}${link.isPlaceholder ? ' placeholder' : ''}`}
+                    aria-label={`${project.title} ${link.label}${link.isPlaceholder ? " placeholder" : ""}`}
                   >
-                    {link.label === 'Presentation' ? (
+                    {link.label === "Presentation" ? (
                       <Linkedin size={16} aria-hidden="true" />
-                    ) : link.label === 'GitHub' ? (
+                    ) : link.label === "GitHub" ? (
                       <Github size={16} aria-hidden="true" />
                     ) : (
                       <ExternalLink size={16} aria-hidden="true" />
                     )}
                     <span>
                       {link.label}
-                      {link.isPlaceholder ? ' [Placeholder]' : ''}
+                      {link.isPlaceholder ? " [Placeholder]" : ""}
                     </span>
                   </a>
-                )
-              ))}
+                ),
+              )}
             </div>
           </Card>
         ))}

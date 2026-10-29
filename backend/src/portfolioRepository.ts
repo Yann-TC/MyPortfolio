@@ -143,7 +143,7 @@ export async function getProfileSettings(): Promise<ProfileSettings> {
     headline: profile.headline,
     subtitle: profile.subtitle ?? '',
     profileTitle:
-      profile.profile_title ?? 'Engineering student with production frontend experience.',
+      profile.profile_title ?? 'Engineering student with production frontend experience',
     profileIntro:
       profile.profile_intro ??
       'Focused on building reliable, readable software across modern frontend, backend services, and lower-level systems.',

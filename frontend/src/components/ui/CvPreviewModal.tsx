@@ -11,7 +11,7 @@ type CvPreviewModalProps = {
 
 export function CvPreviewModal({
   documentUrl,
-  title = 'CV Preview',
+  title = 'Resume Preview',
   isOpen,
   onClose,
 }: CvPreviewModalProps) {
