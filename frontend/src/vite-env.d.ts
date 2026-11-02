@@ -7,3 +7,6 @@ declare module 'react' {
     '--reveal-index'?: number;
   }
 }
+declare global {
+  const __ASSET_VERSION__: string;
+}

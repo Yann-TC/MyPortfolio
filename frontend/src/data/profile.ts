@@ -34,8 +34,8 @@ export const profile: ProfileSettings = {
   internshipStart: '2027-04-01',
   internshipEnd: '2027-08-31',
   internshipLabel: 'Software Development Internship',
-  resumeUrl: '/documents/resume.pdf',
-  recommendationLetterUrl: '/documents/lettre_recommandation_yann_tc_akord.pdf',
+  resumeUrl: `/documents/resume.pdf?v=${__ASSET_VERSION__}`,
+  recommendationLetterUrl: `/documents/lettre_recommandation_yann_tc_akord.pdf?v=${__ASSET_VERSION__}`,
   githubUrl: 'https://github.com/Yann-TC',
   linkedinUrl: 'https://www.linkedin.com/in/yann-toison-chabane',
 };
